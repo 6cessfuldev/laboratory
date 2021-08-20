@@ -1,0 +1,67 @@
+<html><head> 
+ <style type="text/css" id="dcoder_stylesheet">body {
+  background-color : 00a3d2;
+}
+
+.container{
+  width : 700px;
+  height : 300px;
+  background-color : 3191b5;
+  position : absolute;
+  left : 50%;
+  top : 50%;
+  margin-left : -350px;
+  margin-top : -500px;
+  text-align : center;
+}
+
+#quiz{
+  font-size : 40px;
+  
+
+#typing{
+  width : 100px;
+  height: 100px;
+}
+
+#score{
+  font-size : 100px;
+}</style></head> 
+ <body> 
+  <div class="container"> 
+   <h1 id="quiz">HELLO</h1> 
+   <input type="text" id="typing" onkeydown="enter()"> 
+   <h2>score</h2> 
+   <p id="score">0</p> 
+  </div> 
+ 
+<script type="text/javascript" id="dcoder_script">var questList = ['HELLO', 'world','my', 'name', 'is', '6cessfuldev'] 
+
+var i = 0;
+  
+function changeQuest(){
+  if (i<questList.length){
+    document.getElementById('quiz').innerHTML=questList[i];
+    return questList[i]}
+    
+    else {document.getElementById('quiz').innerHTML="Win!"}
+}
+
+var j=0;
+
+var enter = function(){
+      if (document.getElementById('typing').value===
+        changeQuest()){
+        i+=1;
+        let score =10*i-10*j;
+        document.getElementById('score').innerHTML=score;      
+        changeQuest();
+        document.getElementById('typing').value = null;
+      } else if(window.event.keyCode==13){
+      j++;
+      let score =10*i-10*j;
+      document.getElementById('score').innerHTML=score;
+      document.getElementById('typing').value = null;
+      }
+  
+ }</script></body></html>
