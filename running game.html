@@ -1,0 +1,151 @@
+<html><head> 
+  <title>bound a ball</title> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+ <style type="text/css" id="dcoder_stylesheet">*{
+  margin : 0;
+  paddling : 0;
+}
+
+body {
+  background-color : eeeff1;
+}
+
+.header {
+  background-color : dcedc1;
+  height : 80px;
+  text-align : center;
+}
+
+.str {
+  position : relative;
+  top : 13;
+  margin-left: 10px;
+  font-size : 40px;
+  width : 130px;
+}
+
+.playground {
+  height : 410px;
+  background-image : url("https://cdn.pixabay.com/photo/2017/08/13/05/46/football-2636300_1280.jpg");
+  }
+
+img {
+  width : 100px;
+  height : 100px;
+}
+
+.hen {
+  position : absolute;
+}
+
+.fliped {
+    transform:rotate(0deg);
+  -moz-transform: scaleX(-1); 
+  -o-transform: scaleX(-1); 
+  -webkit-transform: scaleX(-1); 
+  transform: scaleX(-1);   
+  filter: 'FlipH';
+  -ms-filter: "FlipH";
+}
+
+.people {
+  height : 500px;
+  background-image : url("https://cdn.pixabay.com/photo/2015/01/12/18/25/stadium-597536_1280.jpg");
+}</style></head> 
+ <body> 
+  <div class="header"> 
+   <label for="str">come back first!</label> 
+   <input type="button" class="str" value="Start!"> 
+  </div> 
+  <div class="playground"> 
+   <p> <img class="man" src="https://r7.pngwing.com/path/673/457/126/computer-icons-running-5k-run-clip-art-volleyball-3cff4d965e0b2f0155d1a778fd3dd51d.png"> </p> 
+   <p> <img class="cow" src="http://pngimg.com/uploads/cow/cow_PNG2124.png"> </p> 
+   <p> <img class="horse" src="http://pngimg.com/uploads/horse/horse_PNG325.png"></p> 
+   <p> <img class="hen" src="https://r7.pngwing.com/path/935/958/575/rooster-chicken-cock-png-62562fa58fb7cef1123fb2e1dc3c84b0.png"></p> 
+  </div> 
+  <div class="people"></div> 
+ 
+<script type="text/javascript" id="dcoder_script">$(function(){
+  
+//function
+
+  var horseMov = function(){
+    $(".horse")
+    .animate({marginLeft: "400px"}, 1000, "linear",function(){
+      $(this).removeClass('fliped')
+    })
+    .animate({marginLeft: "700px"}, 1000, "linear",function(){
+      $(this).addClass('fliped')
+    })
+  };
+  var manCoor = $('.man').css('marginLeft');
+  var henCoor = $('.hen').css('marginLeft');
+  var horseCoor = $('.horse').css('marginLeft');
+  var cowCoor = $('.cow').css('marginLeft');
+  
+  var scoring = function(){
+    if (manCoor < henCoor){
+      console.log('first!')
+    } else if (manCoor < cowCoor){
+      console.log('Second!')
+    } else if (manCoor < horseCoor){
+      console.log('Third')
+    } else {console.log('loser')}
+  };
+  
+  // variation
+  var i=0;
+  var j=0;
+  var k=0;
+  
+  $(".str").on("click", function(){
+    if(j==0){
+      for(j=0;j<20;j++){
+        $(".cow").animate({marginLeft: "+=100px"}, 800, "swing")
+        };
+      $('.cow')
+      .animate({marginLeft: "+=100px"}, 800, "swing", function(){
+        $(this).addClass('fliped')
+        })
+      .animate({marginLeft: "0px"}, 200, "swing")
+      
+      $(".horse")
+      .animate({marginLeft: "700px"}, 1000, "linear",function(){
+         $(this).addClass('fliped')
+         })
+      for(k=0;k<5;k++){
+        horseMov();
+        }
+      $('.horse').animate({marginLeft: "0px"}, 7000, "linear")
+   
+  /
+      
+    $(".hen")
+    .addClass('fliped')
+    .animate({marginLeft: "750px"}, 1000, "swing" ,function(){
+         $(this).removeClass('fliped')
+          })
+    .animate({marginLeft: "300px"}, 2000, "swing")
+    .animate({marginTop: "-1000px"}, 200, "swing")
+    .animate({marginLeft: "0px"}, 10000, "swing")
+    .animate({marginTop: "0px"}, 1000, "swing");
+}});
+   
+  $(".man").on("click", function(){
+    if(i<22){
+      i++;
+      $(".man").animate({
+        marginLeft: "+=40px"
+      }, 100, "swing");
+    } else if(i<44) {
+      i++;
+      $(".man").animate({
+        marginLeft: "-=40px"
+      }, 100, "swing", function(){
+         $(this).addClass('fliped')
+          });  
+    } else { scoring();
+    }
+  }); 
+        
+});</script></body></html>
