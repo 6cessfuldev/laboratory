@@ -1,14 +1,11 @@
 <html><head> 
-  <title>bound a ball</title> 
+  <title>Sprint</title> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
  <style type="text/css" id="dcoder_stylesheet">*{
   margin : 0;
-  paddling : 0;
+  padding : 0;
 }
 
-body {
-  background-color : eeeff1;
-}
 
 .header {
   background-color : dcedc1;
@@ -49,8 +46,44 @@ img {
 }
 
 .people {
-  height : 500px;
+  height : 1500px;
   background-image : url("https://cdn.pixabay.com/photo/2015/01/12/18/25/stadium-597536_1280.jpg");
+}
+
+.modal {
+  position : fixed;
+  left: 0;
+  top : 0;
+  width : 100%;
+  height : 100%;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+}
+
+.modal_overlay {
+  background-color : rgba(0,0,0,0.6);
+  width : 100%;
+  height : 100%;
+  position : absolute;
+}
+
+.modal_contents {
+  position : relative;
+  background-color : white;
+  padding : 40px 80px;
+  text-align : center;
+  border-radius : 10px;
+  top : 30px;
+  width : 40%;
+}
+
+h1 {
+  margin : 0;
+}
+
+.hidden {
+  display : none;
 }</style></head> 
  <body> 
   <div class="header"> 
@@ -64,10 +97,30 @@ img {
    <p> <img class="hen" src="https://r7.pngwing.com/path/935/958/575/rooster-chicken-cock-png-62562fa58fb7cef1123fb2e1dc3c84b0.png"></p> 
   </div> 
   <div class="people"></div> 
+  <div class="modal hidden"> 
+   <div class="modal_overlay"></div> 
+   <div class="modal_contents"> 
+    <h1>You are <span class="rank"></span></h1> 
+    <button id="btn">X</button> 
+   </div> 
+  </div> 
  
-<script type="text/javascript" id="dcoder_script">$(function(){
+<script type="text/javascript" id="dcoder_script">var closeModal = function(){
+    $('.modal').addClass('hidden')
+  };
+  
+$(function(){
   
 //function
+
+  var openModal = function(){
+    $('.modal').removeClass('hidden')
+  };
+  /*
+  var closeModal = function(){
+    $('.modal').addClass('hidden')
+  }; */
+  $('#btn').attr('onclick','closeModal();')
 
   var horseMov = function(){
     $(".horse")
@@ -78,21 +131,25 @@ img {
       $(this).addClass('fliped')
     })
   };
-  var manCoor = $('.man').css('marginLeft');
-  var henCoor = $('.hen').css('marginLeft');
-  var horseCoor = $('.horse').css('marginLeft');
-  var cowCoor = $('.cow').css('marginLeft');
   
-  var scoring = function(){
-    if (manCoor < henCoor){
-      console.log('first!')
-    } else if (manCoor < cowCoor){
-      console.log('Second!')
-    } else if (manCoor < horseCoor){
-      console.log('Third')
-    } else {console.log('loser')}
-  };
-  
+ var scoring = function(){
+   let manCo = $('.man').css('marginLeft').replace('px','')
+   let henCo = $('.hen').css('marginLeft').replace('px','')
+   let horseCo = $('.horse').css('marginLeft').replace('px','')
+   let cowCo =  $('.cow').css('marginLeft').replace('px','')
+   let l=0;
+   if (manCo<henCo) l++;
+   if (manCo<horseCo) l++;
+   if (manCo<cowCo) l++;
+   console.log(l);
+   switch (l) {
+     case 3 :  return 'First!';
+     case 2 :  return 'Second~';
+     case 1 :  return 'third';
+     case 0 :  return 'Loser..';
+   }
+   }
+ 
   // variation
   var i=0;
   var j=0;
@@ -100,11 +157,11 @@ img {
   
   $(".str").on("click", function(){
     if(j==0){
-      for(j=0;j<20;j++){
-        $(".cow").animate({marginLeft: "+=100px"}, 800, "swing")
-        };
+      for(j=0;j<8;j++){
+        $(".cow").animate({marginLeft: "+=90px"}, 2000, "swing")
+        }
       $('.cow')
-      .animate({marginLeft: "+=100px"}, 800, "swing", function(){
+      .animate({marginLeft: "+=100px"}, 1000, "swing", function(){
         $(this).addClass('fliped')
         })
       .animate({marginLeft: "0px"}, 200, "swing")
@@ -117,9 +174,7 @@ img {
         horseMov();
         }
       $('.horse').animate({marginLeft: "0px"}, 7000, "linear")
-   
-  /
-      
+  
     $(".hen")
     .addClass('fliped')
     .animate({marginLeft: "750px"}, 1000, "swing" ,function(){
@@ -130,21 +185,34 @@ img {
     .animate({marginLeft: "0px"}, 10000, "swing")
     .animate({marginTop: "0px"}, 1000, "swing");
 }});
-   
+  var line ;
   $(".man").on("click", function(){
     if(i<22){
       i++;
       $(".man").animate({
         marginLeft: "+=40px"
       }, 100, "swing");
+      if (i==22) {
+        i++;
+        $(this).addClass('fliped')  
+      }
     } else if(i<44) {
       i++;
       $(".man").animate({
         marginLeft: "-=40px"
       }, 100, "swing", function(){
+        scoring();
+        });
+    } else { 
+      i++;
+      $(".man").animate({
+        marginLeft: "-=40px"
+      }, 100, "swing", function(){
          $(this).addClass('fliped')
+        $('.rank').html(scoring());
+        openModal();
           });  
-    } else { scoring();
+      
     }
   }); 
         
