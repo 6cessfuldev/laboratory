@@ -1,0 +1,93 @@
+<html lang="en"><head> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width initial-scale=1.0" < head> 
+ <style type="text/css" id="dcoder_stylesheet">*{
+  margin : 0;
+  padding : 0;
+  box-sizing : border-box;
+}
+
+body {
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  background-size : cover;
+  background-position : center center;
+  background-image : url("https://cdn.pixabay.com/photo/2021/08/19/02/41/background-6556849_1280.jpg");
+  background-repeat : no-repeat;
+  width : 100vw;
+  height : 100vh;
+}
+
+.container {
+  perspective : 1000px;
+}
+
+.cube{
+  margin-top : -100px;
+  width : 64px;
+  height : 64px;
+  transform-style : preserve-3d;
+  transition : all 1s;
+  transform: translate3d(25px, 60px , 650px) rotateX(10deg);
+}
+
+.cube > a > img {
+  width : 64px;
+  height : 64px;
+} 
+
+.cube a {
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 64px;
+  height : 64px;
+  background-color : skyblue;;
+}
+
+.cube a:nth-child(1){
+  transform : translateZ(32px);
+}
+
+.cube a:nth-child(2){
+  transform : rotateX(90deg) translateZ(32px);
+}
+
+.cube a:nth-child(3){
+  transform : rotateX(180deg) translateZ(32px);
+}
+
+.cube a:nth-child(4){
+  transform : rotateX(270deg) translateZ(32px);
+}</style></head> 
+ <body> 
+  <div class="container"> 
+   <div class="cube"> 
+    <a href="https://google.com"> <img src="https://r7.pngwing.com/path/673/457/126/computer-icons-running-5k-run-clip-art-volleyball-3cff4d965e0b2f0155d1a778fd3dd51d.png" alt="man"> </a> 
+    <a href="https://naver.com"> <img src="http://pngimg.com/uploads/cow/cow_PNG2124.png" alt="cow"> </a> 
+    <a href="https://daum.net"> <img src="http://pngimg.com/uploads/horse/horse_PNG325.png" alt="horse"> </a> 
+    <a href="https://facebook.com"> <img src="https://r7.pngwing.com/path/935/958/575/rooster-chicken-cock-png-62562fa58fb7cef1123fb2e1dc3c84b0.png" alt="hen"> </a> 
+   </div> 
+  </div> 
+ 
+<script type="text/javascript" id="dcoder_script">let deg = 0;
+/*setInterval(()=>{
+  deg = deg-90;
+  document.querySelector('.cube').style.transform
+='rotateX('+deg+'deg)'
+}, 1000);
+*/
+function rollingDice(elmnt){
+  elmnt.addEventListener("click", rolling);
+  
+  function rolling(e){
+    e.preventDefault();
+    deg = deg -720 -90*(Math.floor(Math.random()*4)+1);
+    elmnt.style.transform='translate3d(0px, 0px , 0px) rotateX('+deg+'deg)'
+    e.preventDefault=false;
+    elmnt.removeEventListener("click", rolling)
+  }
+}
+
+rollingDice(document.querySelector('.cube'))</script></body></html>
