@@ -1,0 +1,56 @@
+*{
+  margin : 0;
+  padding : 0;
+  box-sizing : border-box;
+}
+
+body {
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  background-size : cover;
+  background-position : center center;
+  background-image : url("https://cdn.pixabay.com/photo/2021/08/19/02/41/background-6556849_1280.jpg");
+  background-repeat : no-repeat;
+  width : 100vw;
+  height : 100vh;
+  
+}
+
+.container {
+  perspective : 1000px;
+}
+
+.cube {
+  position : absolute;
+  transform-style : preserve-3d;
+  transition : all 1s;
+  transform : rotateX(-20deg) rotateY(20deg);
+}
+
+.cube img {
+  position : absolute;
+  width : 40px;
+  height : 40px;
+	transition : all 1s;
+	
+}
+
+.cube :nth-child(1){
+	transform : rotateX(90deg) translateZ(40px);
+}
+.cube :nth-child(2){
+	transform : rotateX(180deg) translateZ(40px);
+}
+.cube :nth-child(3){
+	transform : rotateX(270deg) translateZ(40px);
+}
+.cube :nth-child(4){
+	transform : rotateY(90deg) translateZ(40px);
+}
+.cube :nth-child(5){
+	transform : rotateY(-90deg) translateZ(40px);
+}
+.cube :nth-child(6){
+	transform : translateZ(40px);
+}
