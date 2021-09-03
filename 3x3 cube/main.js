@@ -11,17 +11,20 @@ let degZ = new Array(54);
 let deg = new Array(54);
 let plus =new Array(54);
 
+let total = new Array(54);
+for(let i=0; i<54; i++){
+			total[i] = "";
+		};
+
+let j = 0;	
 for (let i = 0; i < 54; i++) {
     plus[i] = new Array();
-	for(let j=0; j<54; j++){
-		plus[i][j] = "";  
 	}
-}
 
+let plusDeg =new Array(54);
 for(let i=0; i<54; i++){
-	plus[i][i] = "";  
-}
-
+	plusDeg[i] = 0;
+};
 
 for(let i=0; i<54; i++){
 	imgTag[i] = document.createElement('img');
@@ -88,8 +91,8 @@ for(let i=0; i<54; i++){
 		else{
 			y[i]=-40;
 		}
-		deg[i]="rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) " +plus[i];
-	imgTag[i].style.transform= deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)"
+		deg[i]="rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) ";
+		imgTag[i].style.transform= deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)"
 	}  	
 
 
@@ -139,77 +142,13 @@ for(let i=0; i<54; i++){
 
 // 화면으로 보기에 X축으로 돌리기
 
-function rotateX(){
-	for(let i=0; i<54; i++){   
-		xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';	
-	record[i].forEach(axis => {
-		switch (axis) { 
-			case "x" :  
-				 yy[i] = rotX[rotX.indexOf(yy[i])+1];
-				 zz[i] = rotX[rotX.indexOf(zz[i])+1];
-				break;
-			case "-x" : 
-				yy[i] = rotX[rotX.indexOf(yy[i])+3];
-				zz[i] = rotX[rotX.indexOf(zz[i])+3];
-				break;
-			case "y" : 
-				xx[i] = rotY[rotY.indexOf(xx[i])+1];
-				zz[i] = rotY[rotY.indexOf(zz[i])+1];
-				break;
-			case "-y" : 
-				xx[i] = rotY[rotY.indexOf(xx[i])+3];
-				zz[i] = rotY[rotY.indexOf(zz[i])+3];
-				break;
-			case "z" : 
-				xx[i] = rotZ[rotZ.indexOf(xx[i])+1];
-				yy[i] = rotZ[rotZ.indexOf(yy[i])+1];
-				break;
-			case "-z" : 
-				xx[i] = rotZ[rotZ.indexOf(xx[i])+3];
-				yy[i] = rotZ[rotZ.indexOf(yy[i])+3];
-				break;
-		}
-	});
-	switch (xx[i]) { 
-		case "x" :  
-			 plus[i] += " rotateX(90deg)"
-			break;
-		case "-x" : 
-			 plus[i] += " rotateX(-90deg)"
-			break;
-		case "y" : 
-			 plus[i] += " rotateY(90deg)"
-			break;
-		case "-y" : 
-			 plus[i] += " rotateY(-90deg)"
-			break;
-		case "z" : 
-			 plus[i] += " rotateZ(90deg)"
-			break;
-		case "-z" : 
-			 plus[i] += " rotateZ(-90deg)"
-			break;
-	}
-	deg[i]="rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) " +plus[i];
-	imgTag[i].style.transform= deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)"
-	record[i].push('x');
-	}
-};
-
-
-// 화면으로 보기에 Y축으로 돌리기
-
-
-
-function rotateY(){
-	let plusDeg =new Array(54);
-	for(let i=0; i<54; i++){
-		plusDeg[i] = 0;  
-	}
-	for(let i=0; i<54; i++){
-		 xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';
-		record[i].forEach(axis => {
-			switch (axis) { 
+function rotateX (){	
+		
+		
+		for(let i=0; i<54; i++){
+			 xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';
+			record[i].forEach(axis => {
+				switch (axis) {
 				case "x" :  
 					 yy[i] = rotX[rotX.indexOf(yy[i])+1];
 					 zz[i] = rotX[rotX.indexOf(zz[i])+1];
@@ -234,64 +173,79 @@ function rotateY(){
 					xx[i] = rotZ[rotZ.indexOf(xx[i])+3];
 					yy[i] = rotZ[rotZ.indexOf(yy[i])+3];
 					break;
-			}	
+				}	
+			});
+		}		
+		for(i=0; i<54; i++){
+			switch (xx[i]) { 
+			case "x" :  
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+				plus[i][j] = " rotateX(" +plusDeg[i] + "deg)"
+				}
+				break;
+			case "-x" : 
+				if(plusDeg[i]>-90){
+				plusDeg[i] -= 1;
+				plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
+				break;
+			case "y" : 
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
+				break;
+			case "-y" : 
+				if(plusDeg[i]>-90){
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
+				break;
+			case "z" : 
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
+				}
+				break;
+			case "-z" : 
+				if(plusDeg[i]>-90){
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
+				}
+				break;
+			}
+		let rot="" ;
+		plus[i].forEach(rotate => {
+			 rot += rotate;
 		});
-	}	
-	for(i=0; i<54; i++){
-		switch (yy[i]) { 
-		case "x" :  
-			if(plusDeg[i]<90){
-			 plusDeg[i] += 1; 
-			 plus[0][i] += " rotateX(" +plusDeg[i] + "deg)"
-			}
-			break;
-		case "-x" : 
-			if(plusDeg[i]>-90){
-			plusDeg[i] -= 1; 
-			plus[0][i] += " rotateX(" +plusDeg[i] + "deg)"
-			}
-			break;
-		case "y" : 
-			if(plusDeg[i]<90){
-			 plusDeg[i] += 1; 
-			plus[0][i] += " rotateY(" +plusDeg[i] + "deg)"
-			}
-			break;
-		case "-y" : 
-			if(plusDeg[i]>-90){
-			 plusDeg[i] -= 1; 
-			plus[0][i] += " rotateY(" +plusDeg[i] + "deg)"
-			}
-			break;
-		case "z" : 
-			if(plusDeg[i]<90){
-			 plusDeg[i] += 1; 
-			plus[0][i] += " rotateZ(" +plusDeg[i] + "deg)"
-			}
-			break;
-		case "-z" : 
-			if(plusDeg[i]>-90){
-			 plusDeg[i] -= 1; 
-			plus[0][i] += " rotateZ(" +plusDeg[i] + "deg)"
-			}
-			break;
+		total[i] = rot;
+		deg[i] = "rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg)" + total[i];
+		imgTag[i].style.transform = deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
 		}
-	deg[i]="rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) " +plus[0][i];
-	imgTag[i].style.transform= deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
 	}
+
+function rotateXXX(){
+	function fpx(){
+		requestAnimationFrame(fpx);
+		rotateX();
+	}
+	fpx();
+	for(i=0; i<54; i++){
+		record[i].push('x');
+	};
+	j++;
+	for(let i=0; i<54; i++){
+		plusDeg[i] = 0;
+	};
 }
 
 
-// 찐 함수
 
-	
-	
-	function rotateYY (){	
-	
-		let plusDeg =new Array(54);
-		for(let i=0; i<54; i++){
-			plusDeg[i] = 0;  
-		}
+// 화면으로 보기에 Y축으로 돌리기
+
+	function rotateY (){	
+		
 		
 		for(let i=0; i<54; i++){
 			 xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';
@@ -328,118 +282,168 @@ function rotateY(){
 			switch (yy[i]) { 
 			case "x" :  
 				if(plusDeg[i]<90){
-				 plusDeg[i] += 5; 
-				plus[0][i] = " rotateX(" +plusDeg[i] + "deg)"
+				 plusDeg[i] += 1; 
+				plus[i][j] = " rotateX(" +plusDeg[i] + "deg)"
 				}
 				break;
 			case "-x" : 
 				if(plusDeg[i]>-90){
-				plusDeg[i] -= 5;
-				plus[0][i] = " rotateY(" +plusDeg[i] + "deg)"
+				plusDeg[i] -= 1;
+				plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
 				}
 				break;
 			case "y" : 
 				if(plusDeg[i]<90){
-				 plusDeg[i] += 5; 
-					plus[0][i] = " rotateY(" +plusDeg[i] + "deg)"
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
 				}
 				break;
 			case "-y" : 
 				if(plusDeg[i]>-90){
-				 plusDeg[i] -= 5; 
-					plus[0][i] = " rotateY(" +plusDeg[i] + "deg)"
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
 				}
 				break;
 			case "z" : 
 				if(plusDeg[i]<90){
-				 plusDeg[i] += 5; 
-					plus[0][i] = " rotateZ(" +plusDeg[i] + "deg)"
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
 				}
 				break;
 			case "-z" : 
 				if(plusDeg[i]>-90){
-				 plusDeg[i] -= 5; 
-					plus[0][i] = " rotateZ(" +plusDeg[i] + "deg)"
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
 				}
 				break;
 			}
-		deg[i] = "rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) " +plus[0][i];
-		imgTag[i].style.transform= deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
+		let rot="" ;
+		plus[i].forEach(rotate => {
+			 rot += rotate;
+		});
+		total[i] = rot;
+		deg[i] = "rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg)" + total[i];
+		imgTag[i].style.transform = deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
 		}
-//record[i].push('y');
 	}
+
+
+function rotateYYY(){
+	function fpx(){
+		requestAnimationFrame(fpx);
+		rotateY();
+	}
+	fpx();
+	for(i=0; i<54; i++){
+		record[i].push('y');
+	};
+	j++;
+	for(let i=0; i<54; i++){
+		plusDeg[i] = 0;
+	};
+}
 	
 
 
 // 화면으로 보기에 Z축으로 돌리기
 
-function rotateZ(){
-	for(let i=0; i<54; i++){
-		 xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';
-	record[i].forEach(axis => {
-		switch (axis) { 
+function rotateZ (){	
+		
+		
+		for(let i=0; i<54; i++){
+			 xx[i] = 'x';  yy[i] = 'y'; zz[i] = 'z';
+			record[i].forEach(axis => {
+				switch (axis) {
+				case "x" :  
+					 yy[i] = rotX[rotX.indexOf(yy[i])+1];
+					 zz[i] = rotX[rotX.indexOf(zz[i])+1];
+					break;
+				case "-x" : 
+					yy[i] = rotX[rotX.indexOf(yy[i])+3];
+					zz[i] = rotX[rotX.indexOf(zz[i])+3];
+					break;
+				case "y" : 
+					xx[i] = rotY[rotY.indexOf(xx[i])+1];
+					zz[i] = rotY[rotY.indexOf(zz[i])+1];
+					break;
+				case "-y" : 
+					xx[i] = rotY[rotY.indexOf(xx[i])+3];
+					zz[i] = rotY[rotY.indexOf(zz[i])+3];
+					break;
+				case "z" : 
+					xx[i] = rotZ[rotZ.indexOf(xx[i])+1];
+					yy[i] = rotZ[rotZ.indexOf(yy[i])+1];
+					break;
+				case "-z" : 
+					xx[i] = rotZ[rotZ.indexOf(xx[i])+3];
+					yy[i] = rotZ[rotZ.indexOf(yy[i])+3];
+					break;
+				}	
+			});
+		}		
+		for(i=0; i<54; i++){
+			switch (zz[i]) { 
 			case "x" :  
-				 yy[i] = rotX[rotX.indexOf(yy[i])+1];
-				 zz[i] = rotX[rotX.indexOf(zz[i])+1];
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+				plus[i][j] = " rotateX(" +plusDeg[i] + "deg)"
+				}
 				break;
 			case "-x" : 
-				yy[i] = rotX[rotX.indexOf(yy[i])+3];
-				zz[i] = rotX[rotX.indexOf(zz[i])+3];
+				if(plusDeg[i]>-90){
+				plusDeg[i] -= 1;
+				plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
 				break;
 			case "y" : 
-				xx[i] = rotY[rotY.indexOf(xx[i])+1];
-				zz[i] = rotY[rotY.indexOf(zz[i])+1];
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
 				break;
 			case "-y" : 
-				xx[i] = rotY[rotY.indexOf(xx[i])+3];
-				zz[i] = rotY[rotY.indexOf(zz[i])+3];
+				if(plusDeg[i]>-90){
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateY(" +plusDeg[i] + "deg)"
+				}
 				break;
 			case "z" : 
-				xx[i] = rotZ[rotZ.indexOf(xx[i])+1];
-				yy[i] = rotZ[rotZ.indexOf(yy[i])+1];
+				if(plusDeg[i]<90){
+				 plusDeg[i] += 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
+				}
 				break;
 			case "-z" : 
-				xx[i] = rotZ[rotZ.indexOf(xx[i])+3];
-				yy[i] = rotZ[rotZ.indexOf(yy[i])+3];
+				if(plusDeg[i]>-90){
+				 plusDeg[i] -= 1; 
+					plus[i][j] = " rotateZ(" +plusDeg[i] + "deg)"
+				}
 				break;
+			}
+		let rot="" ;
+		plus[i].forEach(rotate => {
+			 rot += rotate;
+		});
+		total[i] = rot;
+		deg[i] = "rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg)" + total[i];
+		imgTag[i].style.transform = deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
 		}
-	});
-	switch (zz[i]) { 
-		case "x" :  
-			 plus[i] += " rotateX(90deg) "
-			break;
-		case "-x" : 
-			 plus[i] += " rotateX(-90deg) "
-			break;
-		case "y" : 
-			 plus[i] += " rotateY(90deg) "
-			break;
-		case "-y" : 
-			 plus[i] += " rotateY(-90deg) "
-			break;
-		case "z" : 
-			 plus[i] += " rotateZ(90deg) "
-			break;
-		case "-z" : 
-			 plus[i] += " rotateZ(-90deg) "
-			break;
 	}
-	deg[i]="rotateX("+degX[i]+"deg) rotateY("+degY[i]+"deg) rotateZ("+degZ[i]+"deg) " +plus[i];
-	imgTag[i].style.transform=deg[i] + " translate3d("+x[i]+"px, "+y[i]+"px, "+z[i]+"px)";
-	record[i].push('z')
+
+function rotateZZZ(){
+	function fpx(){
+		requestAnimationFrame(fpx);
+		rotateZ();
 	}
-};
-
-
-
-
-function fpx(){
-	requestAnimationFrame(fpx);
-	
-
+	fpx();
+	for(i=0; i<54; i++){
+		record[i].push('z');
+	};
+	j++;
+	for(let i=0; i<54; i++){
+		plusDeg[i] = 0;
+	};
 }
-
-fpx();
 
 
 
@@ -456,11 +460,7 @@ for (i=0;i<9; i++){
 red(i);
 }
 
-rotateYY();
 
-setInterval(()=> {
-	rotateYY();
-},1000)
 
 
 	
